@@ -6,8 +6,9 @@ import 'package:tutorials/google_sign_in_firebase/home_google_sign_in.dart';
 import 'package:tutorials/notes/providers/note_provider.dart';
 import 'package:tutorials/notes/routes/edit_note/edit_note_page.dart';
 import 'package:tutorials/notes/routes/home/home_page.dart';
-import 'package:tutorials/notes/search_note/search_note.dart';
 import 'package:tutorials/notes/services/sqlite.dart';
+
+import 'notes/routes/search_note/search_note.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
