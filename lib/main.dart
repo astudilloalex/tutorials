@@ -1,11 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tutorials/common/constants.dart';
 import 'package:tutorials/google_sign_in_firebase/home_google_sign_in.dart';
+import 'package:tutorials/notes/providers/note_provider.dart';
+import 'package:tutorials/notes/routes/edit_note/edit_note_page.dart';
+import 'package:tutorials/notes/routes/home/home_page.dart';
+import 'package:tutorials/notes/search_note/search_note.dart';
+import 'package:tutorials/notes/services/sqlite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  await SQLite.init();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => NoteProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,9 +27,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white,
       ),
-      home: _Home(),
+      initialRoute: Routes.home,
+      routes: {
+        Routes.home: (_) => _Home(),
+        Routes.notesHome: (_) => NotesHomePage(),
+        Routes.editNote: (_) => EditNotePage(),
+        Routes.searchNote: (_) => SearchNotePage(),
+      },
     );
   }
 }
@@ -38,6 +57,12 @@ class _Home extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => HomeGoogleSignIn(),
                   ));
+            },
+          ),
+          ListTile(
+            title: Text('Notes App'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.notesHome);
             },
           ),
         ],

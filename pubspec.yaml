@@ -39,6 +39,14 @@ dependencies:
   # https://pub.dev/packages/firebase_auth
   firebase_auth: ^1.0.1
 
+
+  # Notes Packages
+  # https://pub.dev/packages/provider
+  provider: ^5.0.0
+  # https://pub.dev/packages/sqflite
+  sqflite: ^2.0.0+3
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
