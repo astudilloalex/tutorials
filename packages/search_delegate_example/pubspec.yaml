@@ -1,0 +1,21 @@
+name: search_delegate_example
+description: Search delegate example.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.14.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # https://pub.dev/packages/lint
+  lint: ^1.7.2
+
+flutter:

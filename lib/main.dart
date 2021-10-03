@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:search_delegate_example/search_delegate_example.dart';
 import 'package:tutorials/common/constants.dart';
 import 'package:tutorials/google_sign_in_firebase/home_google_sign_in.dart';
 import 'package:tutorials/notes/providers/note_provider.dart';
@@ -31,11 +32,13 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
       ),
       initialRoute: Routes.home,
+      debugShowCheckedModeBanner: false,
       routes: {
         Routes.home: (_) => _Home(),
         Routes.notesHome: (_) => NotesHomePage(),
         Routes.editNote: (_) => EditNotePage(),
         Routes.searchNote: (_) => SearchNotePage(),
+        Routes.searchDelegateExample: (_) => SearchDelegateExample(),
       },
     );
   }
@@ -64,6 +67,12 @@ class _Home extends StatelessWidget {
             title: Text('Notes App'),
             onTap: () {
               Navigator.pushNamed(context, Routes.notesHome);
+            },
+          ),
+          ListTile(
+            title: Text('Search delegate example'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.searchDelegateExample);
             },
           ),
         ],
