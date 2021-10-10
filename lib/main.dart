@@ -1,82 +1,39 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:search_delegate_example/search_delegate_example.dart';
-import 'package:tutorials/common/constants.dart';
-import 'package:tutorials/google_sign_in_firebase/home_google_sign_in.dart';
+import 'package:tutorials/common/routes.dart';
 import 'package:tutorials/notes/providers/note_provider.dart';
-import 'package:tutorials/notes/routes/edit_note/edit_note_page.dart';
-import 'package:tutorials/notes/routes/home/home_page.dart';
 import 'package:tutorials/notes/services/sqlite.dart';
 
-import 'notes/routes/search_note/search_note.dart';
-
+/// Dart's starting point.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await SQLite.init();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => NoteProvider()),
-    ],
-    child: MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => NoteProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
+/// It is the root of the project.
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Tutorials',
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: Routes.home,
       debugShowCheckedModeBanner: false,
-      routes: {
-        Routes.home: (_) => _Home(),
-        Routes.notesHome: (_) => NotesHomePage(),
-        Routes.editNote: (_) => EditNotePage(),
-        Routes.searchNote: (_) => SearchNotePage(),
-        Routes.searchDelegateExample: (_) => SearchDelegateExample(),
-      },
-    );
-  }
-}
-
-class _Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Tutorials'),
-      ),
-      body: ListView(
-        children: [
-          ListTile(
-            title: Text('Google Sign In'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeGoogleSignIn(),
-                  ));
-            },
-          ),
-          ListTile(
-            title: Text('Notes App'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.notesHome);
-            },
-          ),
-          ListTile(
-            title: Text('Search delegate example'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.searchDelegateExample);
-            },
-          ),
-        ],
-      ),
+      onGenerateInitialRoutes: Routes.generateInitialRoutes,
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }

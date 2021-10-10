@@ -6,11 +6,11 @@ class FirebaseUser {
   String? _email;
   String? _imageUrl;
 
-  set user(User? user) {
-    _uid = user != null ? user.uid : null;
-    _name = user != null ? user.displayName : null;
-    _email = user != null ? user.email : null;
-    _imageUrl = user != null ? user.photoURL : null;
+  void user(User? user) {
+    _uid = user?.uid;
+    _name = user?.displayName;
+    _email = user?.email;
+    _imageUrl = user?.photoURL;
   }
 
   String? get uid => _uid;

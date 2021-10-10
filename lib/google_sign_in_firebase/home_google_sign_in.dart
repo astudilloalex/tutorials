@@ -3,6 +3,8 @@ import 'package:tutorials/google_sign_in_firebase/auth_with_google.dart';
 import 'package:tutorials/google_sign_in_firebase/model/firebase_user.dart';
 
 class HomeGoogleSignIn extends StatefulWidget {
+  const HomeGoogleSignIn({Key? key}) : super(key: key);
+
   @override
   _State createState() => _State();
 }
@@ -14,14 +16,14 @@ class _State extends State<HomeGoogleSignIn> {
   @override
   void initState() {
     super.initState();
-    _user.user = _auth.user;
+    _user.user(_auth.user);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google Sign In'),
+        title: const Text('Google Sign In'),
       ),
       body: Center(
         child: _user.uid != null ? _logged() : _login(),
@@ -31,12 +33,12 @@ class _State extends State<HomeGoogleSignIn> {
 
   ElevatedButton _login() {
     return ElevatedButton.icon(
-      icon: Icon(Icons.login),
-      label: Text('Log in'),
+      icon: const Icon(Icons.login),
+      label: const Text('Log in'),
       onPressed: () async {
         await _auth.signInGoogle();
         setState(() {
-          _user.user = _auth.user;
+          _user.user(_auth.user);
         });
       },
     );
@@ -51,12 +53,12 @@ class _State extends State<HomeGoogleSignIn> {
         Text(_user.name!),
         Text(_user.email!),
         ElevatedButton.icon(
-          icon: Icon(Icons.logout),
-          label: Text('Log out'),
+          icon: const Icon(Icons.logout),
+          label: const Text('Log out'),
           onPressed: () async {
             await _auth.signOutGoogle();
             setState(() {
-              _user.user = _auth.user;
+              _user.user(_auth.user);
             });
           },
         ),

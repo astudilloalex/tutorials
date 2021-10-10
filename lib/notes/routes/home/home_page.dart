@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tutorials/common/constants.dart';
+import 'package:tutorials/common/routes.dart';
 import 'package:tutorials/notes/providers/note_provider.dart';
 import 'package:tutorials/notes/widgets/list_tiles.dart';
 
 class NotesHomePage extends StatelessWidget {
+  const NotesHomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -13,7 +15,7 @@ class NotesHomePage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return _Scaffold();
         }
-        return Scaffold(
+        return const Scaffold(
           body: Center(
             child: CircularProgressIndicator(),
           ),
@@ -29,7 +31,7 @@ class _Scaffold extends StatelessWidget {
     return Scaffold(
       body: _Body(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.pushNamed(context, Routes.editNote);
         },
@@ -62,7 +64,7 @@ class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       sliver: SliverAppBar(
         automaticallyImplyLeading: false,
         floating: true,
@@ -75,7 +77,7 @@ class _AppBar extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          title: Text('Search'),
+          title: const Text('Search'),
           onTap: () {
             Navigator.pushNamed(context, Routes.searchNote);
           },
@@ -89,11 +91,11 @@ class _NoteList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<NoteProvider>(
-      child: Center(
+      child: const Center(
         child: Text('Empty'),
       ),
       builder: (context, provider, child) {
-        if (provider.items.length < 1) {
+        if (provider.items.isEmpty) {
           return SliverToBoxAdapter(
             child: Center(
               child: child,

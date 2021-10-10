@@ -9,20 +9,24 @@ class NoteProvider with ChangeNotifier {
   List<Note> _items = [];
 
   Future<void> loadNotes() async {
-    List<Map<String, dynamic>> data = await _db.notes;
+    final List<Map<String, dynamic>> data = await _db.notes;
     _items = data.map((note) {
       return Note(
-        id: note['id'],
-        title: note['title'],
-        content: note['content'],
+        id: note['id'] as int?,
+        title: note['title'] as String?,
+        content: note['content'] as String?,
       );
     }).toList();
     notifyListeners();
   }
 
-  Future<void> addOrUpdate(String title, String? content, EditMode? editMode,
-      [int? id]) async {
-    id = await _db.insertNote(
+  Future<void> addOrUpdate(
+    String title,
+    String? content,
+    EditMode? editMode, [
+    int? id,
+  ]) async {
+    final int idSaved = await _db.insertNote(
       Note(
         id: id,
         title: title,
@@ -31,15 +35,16 @@ class NoteProvider with ChangeNotifier {
     );
 
     final Note note = Note(
-      id: id,
+      id: idSaved,
       title: title,
       content: content,
     );
-    if (id != 0) {
-      if (editMode == EditMode.ADD)
+    if (idSaved != 0) {
+      if (editMode == EditMode.add) {
         _items.insert(0, note);
-      else if (editMode == EditMode.UPDATE)
+      } else if (editMode == EditMode.update) {
         _items[_items.indexWhere((element) => element.id == note.id)] = note;
+      }
       notifyListeners();
     }
   }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tutorials/common/constants.dart';
+import 'package:tutorials/common/routes.dart';
 import 'package:tutorials/notes/models/note.dart';
 import 'package:tutorials/notes/providers/note_provider.dart';
 
 class EditNotePage extends StatefulWidget {
+  const EditNotePage({Key? key}) : super(key: key);
+
   @override
   _State createState() => _State();
 }
@@ -19,7 +22,7 @@ class _State extends State<EditNotePage> {
   @override
   Widget build(BuildContext context) {
     _note = ModalRoute.of(context)!.settings.arguments != null
-        ? ModalRoute.of(context)!.settings.arguments as Note
+        ? ModalRoute.of(context)!.settings.arguments! as Note
         : _note;
     _noteForm = _NoteForm(_note);
     return Scaffold(
@@ -37,7 +40,7 @@ class _State extends State<EditNotePage> {
 class _NoteForm extends StatefulWidget {
   final Note note;
 
-  _NoteForm(this.note);
+  const _NoteForm(this.note, {Key? key}) : super(key: key);
 
   @override
   _StateNoteForm createState() => _StateNoteForm();
@@ -74,12 +77,11 @@ class _StateNoteForm extends State<_NoteForm> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextFormField(
                 minLines: 1,
-                maxLength: null,
                 controller: _titleController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Title',
                   border: InputBorder.none,
                   hintStyle: TextStyle(
@@ -87,20 +89,22 @@ class _StateNoteForm extends State<_NoteForm> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextFormField(
                 minLines: 15,
                 maxLines: null,
                 controller: _contentController,
-                decoration:
-                    InputDecoration(hintText: 'Note', border: InputBorder.none),
+                decoration: const InputDecoration(
+                  hintText: 'Note',
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],
@@ -112,10 +116,14 @@ class _StateNoteForm extends State<_NoteForm> {
   Future<void> _save(String title, String content) async {
     if (title.isNotEmpty || content.isNotEmpty) {
       if (widget.note.id == null) {
-        await _noteProvider.addOrUpdate(title, content, EditMode.ADD);
+        await _noteProvider.addOrUpdate(title, content, EditMode.add);
       } else if (title != widget.note.title || content != widget.note.content) {
         await _noteProvider.addOrUpdate(
-            title, content, EditMode.UPDATE, widget.note.id);
+          title,
+          content,
+          EditMode.update,
+          widget.note.id,
+        );
       }
     }
   }
@@ -124,7 +132,7 @@ class _StateNoteForm extends State<_NoteForm> {
 class _BottomNavBar extends StatelessWidget {
   final int? id;
 
-  _BottomNavBar({this.id});
+  const _BottomNavBar({Key? key, this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +140,7 @@ class _BottomNavBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.more_vert),
+          icon: const Icon(Icons.more_vert),
           onPressed: () {
             showModalBottomSheet(
               context: context,
@@ -141,15 +149,24 @@ class _BottomNavBar extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ListTile(
-                      title: Text('Delete'),
+                      title: const Text('Delete'),
                       onTap: () async {
                         if (id == null) {
-                          Navigator.popUntil(context, (route) => route.settings.name==Routes.notesHome);
+                          Navigator.popUntil(
+                            context,
+                            (route) => route.settings.name == Routes.notesHome,
+                          );
                         } else {
-                          await Provider.of<NoteProvider>(context,
-                                  listen: false)
-                              .deleteNote(id!);
-                          Navigator.popUntil(context, (route) => route.settings.name==Routes.notesHome);
+                          await Provider.of<NoteProvider>(
+                            context,
+                            listen: false,
+                          ).deleteNote(id!).then(
+                                (value) => Navigator.popUntil(
+                                  context,
+                                  (route) =>
+                                      route.settings.name == Routes.notesHome,
+                                ),
+                              );
                         }
                       },
                     ),

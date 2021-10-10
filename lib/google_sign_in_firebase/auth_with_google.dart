@@ -23,7 +23,7 @@ class AuthServiceGoogle {
       final User? user = userCredential.user;
       if (user!.uid == _auth.currentUser!.uid) return user;
     } catch (e) {
-      print('Error in signInGoogle Method: ${e.toString()}');
+      return Future.error('Error in signInGoogle Method: ${e.toString()}');
     }
     return null;
   }
@@ -33,7 +33,7 @@ class AuthServiceGoogle {
       await _googleSignIn.signOut();
       await _auth.signOut();
     } catch (e) {
-      print(e.toString());
+      return Future.error('Sign out error method ${e.toString()}');
     }
   }
 }

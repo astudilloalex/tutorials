@@ -1,12 +1,14 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class SQLite {
   static late Database _db;
 
   static Future<void> _onCreate(Database db, int ver) async {
     await db.execute(
-        "CREATE TABLE notes(id INTEGER PRIMARY KEY, title TEXT, content TEXT)");
+      "CREATE TABLE notes(id INTEGER PRIMARY KEY, title TEXT, content TEXT)",
+    );
   }
 
   static Future<void> init() async {
@@ -22,14 +24,14 @@ class SQLite {
 
 class SQLiteHelper {
   Future<List<Map<String, dynamic>>> get notes async {
-    return await SQLite.db.query(
+    return SQLite.db.query(
       'notes',
       orderBy: 'id DESC',
     );
   }
 
   Future<int> insertNote(Map<String, dynamic> note) async {
-    return await SQLite.db.insert(
+    return SQLite.db.insert(
       'notes',
       note,
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -37,7 +39,7 @@ class SQLiteHelper {
   }
 
   Future<int> deleteNote(int id) async {
-    return await SQLite.db.delete(
+    return SQLite.db.delete(
       'notes',
       where: 'id=?',
       whereArgs: [id],

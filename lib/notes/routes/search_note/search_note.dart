@@ -5,6 +5,8 @@ import 'package:tutorials/notes/providers/note_provider.dart';
 import 'package:tutorials/notes/widgets/list_tiles.dart';
 
 class SearchNotePage extends StatefulWidget {
+  const SearchNotePage({Key? key}) : super(key: key);
+
   @override
   _State createState() => _State();
 }
@@ -37,7 +39,7 @@ class _State extends State<SearchNotePage> {
             title: TextField(
               autofocus: true,
               controller: _searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search',
               ),
             ),
@@ -59,7 +61,7 @@ class _State extends State<SearchNotePage> {
     setState(() {
       _filteredNotes = _notes.where((note) {
         final find = '${note.title} ${note.content}'.trim().toLowerCase();
-        return find.contains((_searchController.text.trim().toLowerCase()));
+        return find.contains(_searchController.text.trim().toLowerCase());
       }).toList();
     });
   }
