@@ -1,0 +1,23 @@
+name: google_maps_example
+description: Add Google maps in your Flutter app.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.14.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # https://pub.dev/packages/google_maps_flutter
+  google_maps_flutter: ^2.0.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # https://pub.dev/packages/lint
+  lint: ^1.7.2
+
+flutter:

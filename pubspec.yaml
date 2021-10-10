@@ -21,14 +21,18 @@ environment:
   sdk: ">=2.14.3 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  # https://pub.dev/packages/firebase_core
-  firebase_core: ^1.7.0
-  # https://pub.dev/packages/google_sign_in
-  google_sign_in: ^5.1.1
   # https://pub.dev/packages/firebase_auth
   firebase_auth: ^3.1.2
+  # https://pub.dev/packages/firebase_core
+  firebase_core: ^1.7.0
+  flutter:
+    sdk: flutter  
+  google_maps_example:
+    path: ./packages/google_maps_example
+  # https://pub.dev/packages/google_maps_flutter
+  google_maps_flutter: ^2.0.11
+  # https://pub.dev/packages/google_sign_in
+  google_sign_in: ^5.1.1
   # https://pub.dev/packages/provider
   provider: ^6.0.1
   search_delegate_example:
@@ -39,6 +43,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # https://pub.dev/packages/lint
+  lint: ^1.7.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

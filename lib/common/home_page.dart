@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
       _RouteListTile('Google Sign In', Routes.googleSignInExample),
       _RouteListTile('Notes App', Routes.notesHome),
       _RouteListTile('Search delegate example', Routes.searchDelegateExample),
+      _RouteListTile('Google Maps Example', Routes.googleMapsExample),
     ];
     // Scaffold contain the ListView with routes.
     return Scaffold(
